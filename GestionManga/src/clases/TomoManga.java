@@ -5,7 +5,7 @@ package clases;
  * @author Angel
  */
 public class TomoManga {
-    short numero, paginas;
+    short numero;
     float precio;
     String codigo, portada;
 }
