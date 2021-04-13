@@ -13,10 +13,5 @@ public interface IModelo {
     public abstract ColeccionManga consultaClaveColeccion(String clave);
     public abstract ColeccionManga consultaNombreColeccion(String nombre);
     
-    public abstract void altaTomo(TomoManga tm);
-    public abstract void bajaTomo(TomoManga tm);
-    public abstract void modificarTomo(TomoManga tm);
-    public abstract TomoManga consultaClaveTomo(String clave);
-    public abstract TomoManga consultaNumeroTomo(short numero);
     
 }

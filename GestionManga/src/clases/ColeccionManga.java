@@ -14,5 +14,4 @@ public class ColeccionManga {
     String tipoDeTomo; //listBox
     String editorial; //comboBox
     String codigo, titulo, autor, dibujo; //textField
-    TreeSet<TomoManga> tomos; //Mostrar en una ventana/pestaña aparte
 }
