@@ -1,15 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package interfaces;
+
+import clases.*;
 
 /**
  * 
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Angel
  */
 public interface IModelo {
-
+    public abstract void altaColeccion(ColeccionManga cm);
+    public abstract void bajaColeccion(ColeccionManga cm);
+    public abstract void modificarColeccion(ColeccionManga cm);
+    public abstract ColeccionManga consultaClaveColeccion(String clave);
+    public abstract ColeccionManga consultaNombreColeccion(String nombre);
+    
+    public abstract void altaTomo(TomoManga tm);
+    public abstract void bajaTomo(TomoManga tm);
+    public abstract void modificarTomo(TomoManga tm);
+    public abstract TomoManga consultaClaveTomo(String clave);
+    public abstract TomoManga consultaNumeroTomo(short numero);
+    
 }

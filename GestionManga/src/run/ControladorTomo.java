@@ -10,6 +10,6 @@ package run;
  * 
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
-public class Controlador {
+public class ControladorTomo{
     
 }
