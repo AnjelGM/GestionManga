@@ -13,5 +13,4 @@ public interface IModelo {
     public abstract ColeccionManga consultaClaveColeccion(String clave);
     public abstract ColeccionManga consultaNombreColeccion(String nombre);
     
-    
 }

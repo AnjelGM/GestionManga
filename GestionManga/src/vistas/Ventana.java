@@ -4,6 +4,6 @@ package vistas;
  * 
  * @author Angel
  */
-public class SwingColeccion {
+public class Ventana {
 
 }
