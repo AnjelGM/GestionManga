@@ -1,6 +1,7 @@
 package interfaces;
 
 import clases.ColeccionManga;
+import java.io.IOException;
 import run.ControladorColeccion;
 import vistas.VentanaBusquedaConsola;
 
@@ -10,12 +11,13 @@ import vistas.VentanaBusquedaConsola;
  */
 public interface IVentana {
     public abstract ColeccionManga getColeccionManga();
-    public abstract VentanaBusquedaConsola getVentanaBusquedaConsola();
+    public abstract IVentanaBusqueda getVentanaBusqueda();
+    public abstract IVentanaMensaje getVentanaMensaje();
     
     public abstract byte getOperacion();
     
     public abstract void setColeccionManga(ColeccionManga Manga);
     
     public abstract void setControlador(ControladorColeccion cc);
-    public abstract void mostrar(); //Visualice la IGU
+    public abstract void mostrar() throws IOException; //Visualice la IGU
 }

@@ -15,8 +15,8 @@ import java.util.Scanner;
  */
 public class VentanaBusquedaConsola implements IVentanaBusqueda{
     
-    String buscarCodigo, buscarTitulo;
-    Scanner sc;
+    private String buscarCodigo, buscarTitulo;
+    private Scanner sc = new Scanner(System.in);
     
     @Override
     public String getBuscarCodigo() {

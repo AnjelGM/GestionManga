@@ -4,21 +4,35 @@ import clases.ColeccionManga;
 import java.util.Scanner;
 import run.ControladorColeccion;
 import interfaces.IVentana;
+import interfaces.IVentanaMensaje;
+import java.io.IOException;
 
 /**
  * 
  * @author Angel
  */
 public class VentanaConsola implements IVentana{
-    private final VentanaBusquedaConsola busqueda = new VentanaBusquedaConsola();
+    private final VentanaBusquedaConsola busqueda;
+    private final VentanaMensajeConsola mensaje;
     private Scanner sc = new Scanner (System.in);
     private ColeccionManga manga;
     private byte operacion;
     private ControladorColeccion controlador;
-
+    
+    public VentanaConsola(){
+        manga = new ColeccionManga();
+        busqueda = new VentanaBusquedaConsola();
+        mensaje = new VentanaMensajeConsola();
+    }
+    
     @Override
-    public VentanaBusquedaConsola getVentanaBusquedaConsola() {
+    public VentanaBusquedaConsola getVentanaBusqueda() {
         return busqueda;
+    }
+    
+    @Override
+    public VentanaMensajeConsola getVentanaMensaje() {
+        return mensaje;
     }
     
     @Override
@@ -42,11 +56,13 @@ public class VentanaConsola implements IVentana{
     }
 
     @Override
-    public void mostrar(){
-        System.out.println("Introduce la operacion que quieres realizar: "
-                + "1 para crear una coleccion,\n 2 para borrarla,\n "
-                + "3 para modificarla,\n 4 para hacer una consulta por clave y "
-                + "\n5 para hacer una consulta por el nombre");
+    public void mostrar() throws IOException{
+        System.out.println("Introduce la operacion que quieres realizar:\n"
+                + "1 para crear una coleccion,\n2 para borrarla,\n"
+                + "3 para modificarla,\n4 para hacer una consulta por clave y "
+                + "\n5 para hacer una consulta por el nombre\n6 para ver el "
+                + "siguiente tomo\n7 para ver el anterior tomo\n8 para ver el "
+                + "primer tomo\n9 para ver el ultimo tomo\n10 para salir");
         this.operacion = sc.nextByte();
         sc.nextLine();
         switch(operacion){
@@ -63,10 +79,28 @@ public class VentanaConsola implements IVentana{
                 controlador.notifiacion();
                 break;
             case 4: //Consulta por clave
+                busqueda.buscarCodigo();
                 controlador.notifiacion();
                 mostrarManga();
                 break;
             case 5: //Consulta por nombre
+                busqueda.buscarNombre();
+                controlador.notifiacion();
+                mostrarManga();
+                break;
+            case 6:
+                controlador.notifiacion();
+                mostrarManga();
+                break;
+            case 7:
+                controlador.notifiacion();
+                mostrarManga();
+                break;
+            case 8:
+                controlador.notifiacion();
+                mostrarManga();
+                break;
+            case 9:
                 controlador.notifiacion();
                 mostrarManga();
                 break;
@@ -143,14 +177,12 @@ public class VentanaConsola implements IVentana{
         aux = sc.next().charAt(0);
         if(aux == 'S'){
             if(aux == 'S'){
-            manga.setTerminado(true);
-        }else{
-            manga.setTerminado(false);
-        }
+                manga.setTerminado(true);
+            }else{
+                manga.setTerminado(false);
+            }
         }
     }
-    
-    
     
     public void mostrarManga(){
         System.out.println("Codigo: " + manga.getCodigo());
@@ -173,4 +205,6 @@ public class VentanaConsola implements IVentana{
             System.out.println("El manga no está terminado");
         }
     }
+
+    
 }

@@ -13,4 +13,8 @@ public interface IModelo {
     public abstract void modificar(ColeccionManga cm) throws IOException;
     public abstract ColeccionManga consultaClave(String clave) throws IOException;
     public abstract ColeccionManga consultaNombre(String nombre) throws IOException;
+    public abstract ColeccionManga siguiente() throws IOException;
+    public abstract ColeccionManga anterior() throws IOException;
+    public abstract ColeccionManga primero() throws IOException;
+    public abstract ColeccionManga ultimo() throws IOException;
 }
