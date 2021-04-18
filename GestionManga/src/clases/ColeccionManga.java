@@ -102,4 +102,10 @@ public class ColeccionManga implements Serializable{
     public void setDibujo(String dibujo) {
         this.dibujo = dibujo;
     }
+    
+    @Override
+    public boolean equals (Object object){
+        ColeccionManga otroManga = (ColeccionManga) object;
+        return this.getCodigo().equals(otroManga.getCodigo());
+    }
 }

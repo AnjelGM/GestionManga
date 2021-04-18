@@ -46,8 +46,8 @@ public class VentanaConsola implements IVentana{
     }
     
     @Override
-    public void setColeccionManga(ColeccionManga Manga) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setColeccionManga(ColeccionManga manga) {
+        this.manga = manga;
     }
     
     @Override
@@ -161,10 +161,9 @@ public class VentanaConsola implements IVentana{
     
     public void modificar() {
         char aux;
-        String codigoOriginal;
         
         System.out.println("Introduce el codigo del manga que desea modificar:");
-        codigoOriginal = sc.nextLine();
+        manga.setCodigo(sc.nextLine());
         
         System.out.println("Introduce la demografía del manga:");
         manga.setDemografia(sc.nextLine());

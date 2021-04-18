@@ -26,25 +26,25 @@ public class ControladorColeccion {
                 modelo.baja(vistaColeccion.getColeccionManga());
                 break;
             case 3: //Modificacion
-                modelo.baja(vistaColeccion.getColeccionManga());
+                modelo.modificar(vistaColeccion.getColeccionManga());
                 break;
             case 4: //Consulta por clave
-                modelo.consultaClave(vistaColeccion.getVentanaBusqueda().getBuscarCodigo());
+                vistaColeccion.setColeccionManga(modelo.consultaClave(vistaColeccion.getVentanaBusqueda().getBuscarCodigo()));
                 break;
             case 5: //Consulta por nombre
-                modelo.consultaNombre(vistaColeccion.getVentanaBusqueda().getBuscarTitulo());
+                vistaColeccion.setColeccionManga(modelo.consultaNombre(vistaColeccion.getVentanaBusqueda().getBuscarTitulo()));
                 break;
             case 6: //Siguiente registro
-                modelo.siguiente();
+                vistaColeccion.setColeccionManga(modelo.siguiente());
                 break;
             case 7: //Anterior registro
-                modelo.anterior();
+                vistaColeccion.setColeccionManga(modelo.anterior());
                 break;
             case 8: //Primer registro
-                modelo.primero();
+                vistaColeccion.setColeccionManga(modelo.primero());
                 break;
             case 9: //Ultimo registro
-                modelo.ultimo();
+                vistaColeccion.setColeccionManga(modelo.ultimo());
                 break;
         }
     }

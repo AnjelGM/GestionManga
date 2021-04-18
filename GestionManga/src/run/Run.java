@@ -14,11 +14,12 @@ import vistas.VentanaConsola;
 
 /**
  * 
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Angel
  */
 public class Run {
     public static void main(String[] args) {
         VentanaConsola vista = new VentanaConsola();
+        
         ModeloFicheroBinario modelo = new ModeloFicheroBinario();
         ControladorColeccion controlador = new ControladorColeccion(modelo, vista);
         

@@ -87,17 +87,22 @@ public class ModeloFicheroBinario implements IModelo {
                 manga = (ColeccionManga) original.readObject();
                 if (!manga.equals(cm)) {
                     temporal.writeObject(manga);
-                    mensaje = "Se ha eliminado el manga";
                     numeroRegistros--;
+                }else{
+                    mensaje = "Se ha eliminado el manga";
                 }
             }
         } catch (EOFException eo) {
-            //El mensaje de esta excepcion se manda abajo
+            //El mensaje se envia abajo
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ModeloFicheroBinario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        temporal.close();
+        original.close();
+        fichero2.delete();
+        fichero1.renameTo(fichero2);
         controlador.mandarMensaje(mensaje);
     }
 
@@ -132,12 +137,16 @@ public class ModeloFicheroBinario implements IModelo {
                 }
             }
         } catch (EOFException eo) {
-            //El mensaje de esta excepcion se manda abajo
+            //El mensaje se envía abajo
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ModeloFicheroBinario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        temporal.close();
+        original.close();
+        fichero2.delete();
+        fichero1.renameTo(fichero2);
         controlador.mandarMensaje(mensaje);
     }
 
@@ -157,11 +166,13 @@ public class ModeloFicheroBinario implements IModelo {
                 manga = (ColeccionManga) original.readObject();
                 if (manga.getCodigo().equals(clave)) {
                     registroActual = count;
+                    original.close();
                     return manga;
                 }
                 count++;
             }
         } catch (EOFException eo) {
+            original.close();
             controlador.mandarMensaje("No se ha encontrado el manga");
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
@@ -187,11 +198,13 @@ public class ModeloFicheroBinario implements IModelo {
                 manga = (ColeccionManga) original.readObject();
                 if (manga.getTitulo().equals(nombre)) {
                     registroActual = count;
+                    original.close();
                     return manga;
                 }
                 count++;
             }
         } catch (EOFException eo) {
+            original.close();
             controlador.mandarMensaje("No se ha encontrado el manga");
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
@@ -218,9 +231,10 @@ public class ModeloFicheroBinario implements IModelo {
         }
 
         try {
-            for (short count = 1; count < registroActual; count++) {
+            for (short count = 0; count < registroActual; count++) {
                 manga = (ColeccionManga) original.readObject();
             }
+            original.close();
 
         } catch (EOFException eo) {
             controlador.mandarMensaje("No se ha encontrado el manga");
@@ -247,9 +261,10 @@ public class ModeloFicheroBinario implements IModelo {
         }
 
         try {
-            for (short count = 1; count < registroActual; count++) {
+            for (short count = 0; count < registroActual; count++) {
                 manga = (ColeccionManga) original.readObject();
             }
+            original.close();
 
         } catch (EOFException eo) {
             controlador.mandarMensaje("No se ha encontrado el manga");
@@ -274,9 +289,10 @@ public class ModeloFicheroBinario implements IModelo {
         registroActual = 1;
 
         try {
-            for (short count = 1; count < registroActual; count++) {
+            for (short count = 0; count < registroActual; count++) {
                 manga = (ColeccionManga) original.readObject();
             }
+            original.close();
 
         } catch (EOFException eo) {
             controlador.mandarMensaje("No se ha encontrado el manga");
@@ -301,9 +317,10 @@ public class ModeloFicheroBinario implements IModelo {
         registroActual = numeroRegistros;
 
         try {
-            for (short count = 1; count < registroActual; count++) {
+            for (short count = 0; count < registroActual; count++) {
                 manga = (ColeccionManga) original.readObject();
             }
+            original.close();
 
         } catch (EOFException eo) {
             controlador.mandarMensaje("No se ha encontrado el manga");
@@ -316,22 +333,30 @@ public class ModeloFicheroBinario implements IModelo {
     }
     
     public short contarFicheros(){
-        ColeccionManga manga;
         short count = 0;
         
+        File fichero2 = new File(NOMBREFICHERO);
+
+        FileInputStream filein = null;
+
+        ObjectInputStream original = null;
+        
         try {
-            File fichero2 = new File(NOMBREFICHERO);
+            filein = new FileInputStream(fichero2);
 
-            FileInputStream filein = new FileInputStream(fichero2);
-
-            ObjectInputStream original = new ObjectInputStream(filein);
+            original = new ObjectInputStream(filein);
             
             while (true) {
-                manga = (ColeccionManga) original.readObject();
+                original.readObject();
                 registroActual = count;
                 count++;
             }
         } catch (EOFException eo) {
+            try {
+                original.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ModeloFicheroBinario.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (FileNotFoundException ex) {
             return 0;
         } catch (ClassNotFoundException ex) {
