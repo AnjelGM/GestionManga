@@ -17,4 +17,5 @@ public interface IModelo {
     public abstract ColeccionManga anterior() throws IOException;
     public abstract ColeccionManga primero() throws IOException;
     public abstract ColeccionManga ultimo() throws IOException;
+    public abstract String getMensaje();
 }

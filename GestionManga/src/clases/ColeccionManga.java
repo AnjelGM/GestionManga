@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 
  * @author Angel
  */
-public class ColeccionManga implements Serializable{
+public class ColeccionManga implements Serializable, Comparable{
     boolean terminado; //radioButton, Si está terminado o en curso
     boolean edicionNormal, edicionEspecial; //checkBox
     short numeroTomos; //jspinner
@@ -107,5 +107,21 @@ public class ColeccionManga implements Serializable{
     public boolean equals (Object object){
         ColeccionManga otroManga = (ColeccionManga) object;
         return this.getCodigo().equals(otroManga.getCodigo());
+    }
+    
+    @Override
+    public String toString(){
+        StringBuilder salida = new StringBuilder("");
+        salida.append(codigo).append("|").append(titulo).append("|").append(autor);
+        salida.append("|").append(dibujo).append("|").append(editorial).append("|");
+        salida.append(tipoDeTomo).append("|").append(demografia).append("|").append(numeroTomos);
+        salida.append(edicionNormal).append("|").append(edicionEspecial).append("|").append(terminado);
+        return salida.toString();
+    }
+
+    @Override
+    public int compareTo(Object arg0) {
+        ColeccionManga otroManga = (ColeccionManga) arg0;
+        return codigo.compareTo(otroManga.getCodigo());
     }
 }

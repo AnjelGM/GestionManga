@@ -57,7 +57,8 @@ public class VentanaConsola implements IVentana{
 
     @Override
     public void mostrar() throws IOException{
-        System.out.println("Introduce la operacion que quieres realizar:\n"
+        while(true){
+                    System.out.println("Introduce la operacion que quieres realizar:\n"
                 + "1 para crear una coleccion,\n2 para borrarla,\n"
                 + "3 para modificarla,\n4 para hacer una consulta por clave y "
                 + "\n5 para hacer una consulta por el nombre\n6 para ver el "
@@ -104,6 +105,10 @@ public class VentanaConsola implements IVentana{
                 controlador.notifiacion();
                 mostrarManga();
                 break;
+            }
+            if(operacion == 10){
+                break;
+            }
         }
     }
     
@@ -203,7 +208,5 @@ public class VentanaConsola implements IVentana{
         }else{
             System.out.println("El manga no está terminado");
         }
-    }
-
-    
+    } 
 }

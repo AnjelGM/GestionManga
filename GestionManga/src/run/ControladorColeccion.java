@@ -21,12 +21,15 @@ public class ControladorColeccion {
         switch(vistaColeccion.getOperacion()){
             case 1: //Alta
                 modelo.alta(vistaColeccion.getColeccionManga());
+                mandarMensaje(modelo.getMensaje());
                 break;
             case 2: //Baja
                 modelo.baja(vistaColeccion.getColeccionManga());
+                mandarMensaje(modelo.getMensaje());
                 break;
             case 3: //Modificacion
                 modelo.modificar(vistaColeccion.getColeccionManga());
+                mandarMensaje(modelo.getMensaje());
                 break;
             case 4: //Consulta por clave
                 vistaColeccion.setColeccionManga(modelo.consultaClave(vistaColeccion.getVentanaBusqueda().getBuscarCodigo()));

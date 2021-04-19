@@ -14,15 +14,16 @@ public class ModeloFicheroBinario implements IModelo {
 
     private static final String NOMBREFICHERO = "ColeccionesDeMangas.dat";
     private short numeroRegistros, registroActual;
-    private ControladorColeccion controlador;
+    private String mensaje;
 
     public ModeloFicheroBinario() {
         numeroRegistros = contarFicheros();
         registroActual = 0;
+        mensaje = "";
     }
-
-    public void setControlador(ControladorColeccion controlador) {
-        this.controlador = controlador;
+    
+    public String getMensaje(){
+        return mensaje;
     }
 
     @Override
@@ -63,13 +64,12 @@ public class ModeloFicheroBinario implements IModelo {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ModeloFicheroBinario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        controlador.mandarMensaje("Fichero creado");
+        mensaje = "Manga creado";
     }
 
     @Override
     public void baja(ColeccionManga cm) throws IOException {
         ColeccionManga manga;
-        String mensaje;
 
         File fichero1 = new File("auxiliar");
         File fichero2 = new File(NOMBREFICHERO);
@@ -87,9 +87,9 @@ public class ModeloFicheroBinario implements IModelo {
                 manga = (ColeccionManga) original.readObject();
                 if (!manga.equals(cm)) {
                     temporal.writeObject(manga);
-                    numeroRegistros--;
                 }else{
                     mensaje = "Se ha eliminado el manga";
+                    numeroRegistros--;
                 }
             }
         } catch (EOFException eo) {
@@ -103,13 +103,11 @@ public class ModeloFicheroBinario implements IModelo {
         original.close();
         fichero2.delete();
         fichero1.renameTo(fichero2);
-        controlador.mandarMensaje(mensaje);
     }
 
     @Override
     public void modificar(ColeccionManga cm) throws IOException {
         ColeccionManga manga;
-        String mensaje;
 
         File fichero1 = new File("auxiliar");
         File fichero2 = new File(NOMBREFICHERO);
@@ -147,7 +145,6 @@ public class ModeloFicheroBinario implements IModelo {
         original.close();
         fichero2.delete();
         fichero1.renameTo(fichero2);
-        controlador.mandarMensaje(mensaje);
     }
 
     @Override
@@ -173,7 +170,7 @@ public class ModeloFicheroBinario implements IModelo {
             }
         } catch (EOFException eo) {
             original.close();
-            controlador.mandarMensaje("No se ha encontrado el manga");
+            mensaje = "No se ha encontrado el manga";
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {
@@ -205,7 +202,7 @@ public class ModeloFicheroBinario implements IModelo {
             }
         } catch (EOFException eo) {
             original.close();
-            controlador.mandarMensaje("No se ha encontrado el manga");
+            mensaje = "No se ha encontrado el manga";
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {
@@ -237,7 +234,7 @@ public class ModeloFicheroBinario implements IModelo {
             original.close();
 
         } catch (EOFException eo) {
-            controlador.mandarMensaje("No se ha encontrado el manga");
+            mensaje = "No se ha encontrado el manga";
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {
@@ -267,7 +264,7 @@ public class ModeloFicheroBinario implements IModelo {
             original.close();
 
         } catch (EOFException eo) {
-            controlador.mandarMensaje("No se ha encontrado el manga");
+            mensaje = "No se ha encontrado el manga";
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {
@@ -295,7 +292,7 @@ public class ModeloFicheroBinario implements IModelo {
             original.close();
 
         } catch (EOFException eo) {
-            controlador.mandarMensaje("No se ha encontrado el manga");
+            mensaje = "No se ha encontrado el manga";
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {
@@ -323,7 +320,7 @@ public class ModeloFicheroBinario implements IModelo {
             original.close();
 
         } catch (EOFException eo) {
-            controlador.mandarMensaje("No se ha encontrado el manga");
+            mensaje = "No se ha encontrado el manga";
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {

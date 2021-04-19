@@ -24,15 +24,9 @@ public class Run {
         ControladorColeccion controlador = new ControladorColeccion(modelo, vista);
         
         vista.setControlador(controlador);
-        modelo.setControlador(controlador);
         
         try {
-            while(true){
-                vista.mostrar();
-                if(vista.getOperacion() == 10){
-                    break;
-                }
-            }
+            vista.mostrar();
         } catch (IOException ex) {
             Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
         }
