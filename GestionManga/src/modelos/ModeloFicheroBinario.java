@@ -48,6 +48,12 @@ public class ModeloFicheroBinario implements IModelo {
             
             while (true) {
                 manga = (ColeccionManga) original.readObject();
+                if(manga.equals(cm)){
+                    mensaje = "Este manga ya existe";
+                    temporal.close();
+                    original.close();
+                    fichero1.delete();
+                }
                 temporal.writeObject(manga);
             }
         } catch (EOFException eo) {

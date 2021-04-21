@@ -32,10 +32,20 @@ public class ControladorColeccion {
                 mandarMensaje(modelo.getMensaje());
                 break;
             case 4: //Consulta por clave
-                vistaColeccion.setColeccionManga(modelo.consultaClave(vistaColeccion.getVentanaBusqueda().getBuscarCodigo()));
+                if(modelo.consultaClave(vistaColeccion.getVentanaBusqueda().getBuscarCodigo()) == null){
+                    vistaColeccion.setColeccionManga(modelo.consultaClave(vistaColeccion.getVentanaBusqueda().getBuscarCodigo()));
+                    mandarMensaje(modelo.getMensaje());
+                }else{
+                    vistaColeccion.setColeccionManga(modelo.consultaClave(vistaColeccion.getVentanaBusqueda().getBuscarCodigo()));
+                }
                 break;
             case 5: //Consulta por nombre
-                vistaColeccion.setColeccionManga(modelo.consultaNombre(vistaColeccion.getVentanaBusqueda().getBuscarTitulo()));
+                if(modelo.consultaNombre(vistaColeccion.getVentanaBusqueda().getBuscarTitulo()) == null){
+                    vistaColeccion.setColeccionManga(modelo.consultaNombre(vistaColeccion.getVentanaBusqueda().getBuscarTitulo()));
+                    mandarMensaje(modelo.getMensaje());
+                }else{
+                    vistaColeccion.setColeccionManga(modelo.consultaNombre(vistaColeccion.getVentanaBusqueda().getBuscarTitulo()));
+                }
                 break;
             case 6: //Siguiente registro
                 vistaColeccion.setColeccionManga(modelo.siguiente());

@@ -9,8 +9,8 @@ package run;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelos.ModeloFicheroBinario;
-import vistas.VentanaConsola;
+import modelos.*;
+import vistas.*;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class Run {
     public static void main(String[] args) {
         VentanaConsola vista = new VentanaConsola();
         
-        ModeloFicheroBinario modelo = new ModeloFicheroBinario();
+        ModeloColeccion modelo = new ModeloColeccion();
         ControladorColeccion controlador = new ControladorColeccion(modelo, vista);
         
         vista.setControlador(controlador);
@@ -28,7 +28,7 @@ public class Run {
         try {
             vista.mostrar();
         } catch (IOException ex) {
-            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }
 }

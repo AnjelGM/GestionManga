@@ -7,6 +7,8 @@
 package vistas;
 
 import interfaces.IVentanaMensaje;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * 
@@ -23,7 +25,7 @@ public class VentanaMensajeConsola implements IVentanaMensaje{
 
     @Override
     public void mostrar() {
-        System.out.println("\n" + mensaje + "\n");
+        System.out.println("\n" + mensaje);
     }
 
 }

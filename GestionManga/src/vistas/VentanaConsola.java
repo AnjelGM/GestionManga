@@ -58,7 +58,7 @@ public class VentanaConsola implements IVentana{
     @Override
     public void mostrar() throws IOException{
         while(true){
-                    System.out.println("Introduce la operacion que quieres realizar:\n"
+                    System.out.println("\nIntroduce la operacion que quieres realizar:\n"
                 + "1 para crear una coleccion,\n2 para borrarla,\n"
                 + "3 para modificarla,\n4 para hacer una consulta por clave y "
                 + "\n5 para hacer una consulta por el nombre\n6 para ver el "
@@ -82,12 +82,16 @@ public class VentanaConsola implements IVentana{
             case 4: //Consulta por clave
                 busqueda.buscarCodigo();
                 controlador.notifiacion();
-                mostrarManga();
+                if(this.manga != null){
+                    mostrarManga();
+                }
                 break;
             case 5: //Consulta por nombre
                 busqueda.buscarNombre();
                 controlador.notifiacion();
-                mostrarManga();
+                if(this.manga != null){
+                    mostrarManga();
+                }
                 break;
             case 6:
                 controlador.notifiacion();
@@ -188,6 +192,7 @@ public class VentanaConsola implements IVentana{
         }
     }
     
+    @Override
     public void mostrarManga(){
         System.out.println("Codigo: " + manga.getCodigo());
         System.out.println("Titulo: " + manga.getTitulo());
