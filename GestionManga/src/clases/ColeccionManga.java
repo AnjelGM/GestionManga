@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class ColeccionManga implements Serializable, Comparable{
     boolean terminado; //radioButton, Si está terminado o en curso
-    boolean edicionNormal, edicionEspecial; //checkBox
+    boolean edicionEspecial; //checkBox
     short numeroTomos; //jspinner
     String demografia; //comboBox
     String tipoDeTomo; //listBox
@@ -21,14 +21,6 @@ public class ColeccionManga implements Serializable, Comparable{
 
     public void setTerminado(boolean terminado) {
         this.terminado = terminado;
-    }
-
-    public boolean isEdicionNormal() {
-        return edicionNormal;
-    }
-
-    public void setEdicionNormal(boolean edicionNormal) {
-        this.edicionNormal = edicionNormal;
     }
 
     public boolean isEdicionEspecial() {
@@ -115,7 +107,7 @@ public class ColeccionManga implements Serializable, Comparable{
         salida.append(codigo).append("|").append(titulo).append("|").append(autor);
         salida.append("|").append(dibujo).append("|").append(editorial).append("|");
         salida.append(tipoDeTomo).append("|").append(demografia).append("|").append(numeroTomos);
-        salida.append(edicionNormal).append("|").append(edicionEspecial).append("|").append(terminado);
+        salida.append("|").append(edicionEspecial).append("|").append(terminado);
         return salida.toString();
     }
 

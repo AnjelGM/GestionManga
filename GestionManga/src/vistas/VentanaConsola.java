@@ -136,13 +136,6 @@ public class VentanaConsola implements IVentana{
         System.out.println("Introduce el numero de tomos que tiene el manga");
         manga.setNumeroTomos(sc.nextShort());
         sc.nextLine();
-        System.out.println("¿EL manga tiene edición normal? (S/N)");
-        aux = sc.next().charAt(0);
-        if(aux == 'S'){
-            manga.setEdicionNormal(true);
-        }else{
-            manga.setEdicionNormal(false);
-        }
         System.out.println("¿EL manga tiene edición especial? (S/N)");
         aux = sc.next().charAt(0);
         if(aux == 'S'){
@@ -202,9 +195,6 @@ public class VentanaConsola implements IVentana{
         System.out.println("Demografía: " + manga.getDemografia());
         System.out.println("Tipo de tomo: " + manga.getTipoDeTomo());
         System.out.println("Numeros de tomos: " + manga.getNumeroTomos());
-        if(manga.isEdicionNormal()){
-            System.out.println("El manga tiene una edicion normal");
-        }
         if(manga.isEdicionEspecial()){
             System.out.println("El manga tiene una edicion especial");
         }
