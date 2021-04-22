@@ -125,32 +125,38 @@ public class ModeloArray implements IModelo{
 
     @Override
     public ColeccionManga siguiente() throws IOException {
+        if(numeroRegistros == 0){
+            mensaje = "No hay mangas";
+            return null;
+        }
         if(registroActual == numeroRegistros){
             registroActual--;
-        }else if(mangas[registroActual] == null){
-            registroActual -= 2;
+        }else if(registroActual > numeroRegistros){
+            return ultimo();
         }
         registroActual++;
-        if(mangas[registroActual] == null){
-            registroActual--;
-        }
         return mangas[registroActual];
     }
 
     @Override
     public ColeccionManga anterior() throws IOException {
+        if(numeroRegistros == 0){
+            mensaje = "No hay mangas";
+            return null;
+        }
         if(registroActual == 0){
             registroActual++;
         }
         registroActual--;
-        if(mangas[registroActual] == null){
-            registroActual--;
-        }
         return mangas[registroActual];
     }
 
     @Override
     public ColeccionManga primero() throws IOException {
+        if(numeroRegistros == 0){
+            mensaje = "No hay mangas";
+            return null;
+        }
         registroActual = 0;
         return mangas[registroActual];
     }

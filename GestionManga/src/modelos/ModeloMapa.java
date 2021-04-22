@@ -4,19 +4,21 @@ import clases.ColeccionManga;
 import interfaces.IModelo;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 
 /**
  * 
  * @author Angel
  */
-public class ModeloColeccion implements IModelo{
-    
+public class ModeloMapa implements IModelo{
     private short numeroRegistros, registroActual;
-    private ArrayList<ColeccionManga> mangas;
+    private LinkedHashMap<String,ColeccionManga> mangas; //La clave será el codigo del manga
     private String mensaje;
-
-    public ModeloColeccion() {
-        mangas = new ArrayList<ColeccionManga>();
+    
+    public ModeloMapa() {
+        mangas = new LinkedHashMap<String,ColeccionManga>();
         numeroRegistros = 0;
         registroActual = -1;
     }
@@ -28,10 +30,10 @@ public class ModeloColeccion implements IModelo{
     
     @Override
     public void alta(ColeccionManga cm) throws IOException {
-        if(mangas.contains(cm)){
+        if(mangas.containsKey(cm.getCodigo())){
             mensaje = "El manga ya existe";
         }else{
-            mangas.add(cm);
+            mangas.put(cm.getCodigo(), cm);
             mensaje = "Manga creado";
             numeroRegistros++;
         }
@@ -39,8 +41,8 @@ public class ModeloColeccion implements IModelo{
 
     @Override
     public void baja(ColeccionManga cm) throws IOException {
-        if(mangas.contains(cm)){
-            mangas.remove(cm);
+        if(mangas.containsKey(cm.getCodigo())){
+            mangas.remove(cm.getCodigo());
             mensaje = "Manga eliminado";
             numeroRegistros--;
         }else{
@@ -50,15 +52,11 @@ public class ModeloColeccion implements IModelo{
 
     @Override
     public void modificar(ColeccionManga cm) throws IOException {
-        if(mangas.contains(cm)){
-            for(short count = 0;count < numeroRegistros;count++){
-                if(mangas.get(count).equals(cm)){
-                    mangas.get(count).setDemografia(cm.getDemografia());
-                    mangas.get(count).setTipoDeTomo(cm.getTipoDeTomo());
-                    mangas.get(count).setNumeroTomos(cm.getNumeroTomos());
-                    mangas.get(count).setTerminado(cm.isTerminado());
-                }
-            }
+        if(mangas.containsKey(cm.getCodigo())){
+            mangas.get(cm.getCodigo()).setDemografia(cm.getDemografia());
+            mangas.get(cm.getCodigo()).setTipoDeTomo(cm.getTipoDeTomo());
+            mangas.get(cm.getCodigo()).setNumeroTomos(cm.getNumeroTomos());
+            mangas.get(cm.getCodigo()).setTerminado(cm.isTerminado());
             mensaje = "Manga modificado";
         }else{
             mensaje = "No se ha encontrado el manga";
@@ -68,16 +66,17 @@ public class ModeloColeccion implements IModelo{
     @Override
     public ColeccionManga consultaClave(String clave) throws IOException {
         short count = 0;
+        ArrayList lista;
         try{
+            lista = iteratorArrayList();
             while(true){
-            if(mangas.get(count).getCodigo().equals(clave)){
-                registroActual = count;
-                return mangas.get(count);
+                if(mangas.get(lista.get(count)).getCodigo().equals(clave)){
+                    registroActual = count;
+                    return mangas.get(lista.get(count));
+                }
             }
-            count++;
-        }
         }catch(java.lang.IndexOutOfBoundsException IOOBE){
-            mensaje = "No se ha encontrado el manga";
+            mensaje = "No se encontró el manga";
         }
         return null;
     }
@@ -85,16 +84,17 @@ public class ModeloColeccion implements IModelo{
     @Override
     public ColeccionManga consultaNombre(String nombre) throws IOException {
         short count = 0;
+        ArrayList lista;
         try{
+            lista = iteratorArrayList();
             while(true){
-            if(mangas.get(count).getTitulo().equals(nombre)){
-                registroActual = count;
-                return mangas.get(count);
+                if(mangas.get(lista.get(count)).getTitulo().equals(nombre)){
+                    registroActual = count;
+                    return mangas.get(lista.get(count));
+                }
             }
-            count++;
-        }
         }catch(java.lang.IndexOutOfBoundsException IOOBE){
-            mensaje = "No se ha encontrado el manga";
+            mensaje = "No se encontró el manga";
         }
         return null;
     }
@@ -105,13 +105,14 @@ public class ModeloColeccion implements IModelo{
             mensaje = "No hay mangas";
             return null;
         }
+        ArrayList lista = iteratorArrayList();
         if(registroActual == numeroRegistros){
             registroActual--;
         }else if(registroActual > numeroRegistros){
             return ultimo();
         }
         registroActual++;
-        return mangas.get(registroActual);
+        return mangas.get(lista.get(registroActual));
     }
 
     @Override
@@ -120,11 +121,12 @@ public class ModeloColeccion implements IModelo{
             mensaje = "No hay mangas";
             return null;
         }
+        ArrayList lista = iteratorArrayList();
         if(registroActual == 0){
             registroActual++;
         }
         registroActual--;
-        return mangas.get(registroActual);
+        return mangas.get(lista.get(registroActual));
     }
 
     @Override
@@ -133,8 +135,9 @@ public class ModeloColeccion implements IModelo{
             mensaje = "No hay mangas";
             return null;
         }
+        ArrayList lista = iteratorArrayList();
         registroActual = 0;
-        return mangas.get(registroActual);
+        return mangas.get(lista.get(registroActual)); 
     }
 
     @Override
@@ -143,8 +146,23 @@ public class ModeloColeccion implements IModelo{
             mensaje = "No hay mangas";
             return null;
         }
+        ArrayList lista = iteratorArrayList();
         registroActual = (short) (mangas.size() - 1);
-        return mangas.get(registroActual);
+        return mangas.get(lista.get(registroActual));
+    }
+    
+    private ArrayList<String> iteratorArrayList(){
+        LinkedHashSet<String> lhs;
+        ArrayList<String> salida = new ArrayList();
+        Iterator<String> i;
+        
+        lhs = (LinkedHashSet) mangas.keySet();
+        i = lhs.iterator();
+        
+        while(i.hasNext()){
+            salida.add(i.next());
+        }
+        return salida;
     }
     
 }

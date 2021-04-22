@@ -4,7 +4,6 @@ import clases.ColeccionManga;
 import interfaces.IModelo;
 import java.io.*;
 import java.util.logging.*;
-import run.ControladorColeccion;
 
 /**
  *
@@ -17,7 +16,7 @@ public class ModeloFicheroBinario implements IModelo {
     private String mensaje;
 
     public ModeloFicheroBinario() {
-        numeroRegistros = contarFicheros();
+        numeroRegistros = contarRegistros();
         registroActual = 0;
         mensaje = "";
     }
@@ -67,6 +66,7 @@ public class ModeloFicheroBinario implements IModelo {
             temporal.writeObject(cm);
             temporal.close();
             fichero1.renameTo(fichero2);
+            numeroRegistros++;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ModeloFicheroBinario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,7 +77,7 @@ public class ModeloFicheroBinario implements IModelo {
     public void baja(ColeccionManga cm) throws IOException {
         ColeccionManga manga;
 
-        File fichero1 = new File("auxiliar");
+        File fichero1 = new File("auxiliar.dat");
         File fichero2 = new File(NOMBREFICHERO);
 
         FileOutputStream fileout = new FileOutputStream(fichero1, true);
@@ -85,8 +85,6 @@ public class ModeloFicheroBinario implements IModelo {
 
         ObjectOutputStream temporal = new ObjectOutputStream(fileout);
         ObjectInputStream original = new ObjectInputStream(filein);
-
-        mensaje = "No se ha encontrado el manga";
 
         try {
             while (true) {
@@ -99,7 +97,7 @@ public class ModeloFicheroBinario implements IModelo {
                 }
             }
         } catch (EOFException eo) {
-            //El mensaje se envia abajo
+            mensaje = "No se ha encontrado el manga";
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {
@@ -115,7 +113,7 @@ public class ModeloFicheroBinario implements IModelo {
     public void modificar(ColeccionManga cm) throws IOException {
         ColeccionManga manga;
 
-        File fichero1 = new File("auxiliar");
+        File fichero1 = new File("auxiliar.dat");
         File fichero2 = new File(NOMBREFICHERO);
 
         FileOutputStream fileout = new FileOutputStream(fichero1, true);
@@ -123,8 +121,6 @@ public class ModeloFicheroBinario implements IModelo {
 
         ObjectOutputStream temporal = new ObjectOutputStream(fileout);
         ObjectInputStream original = new ObjectInputStream(filein);
-
-        mensaje = "No se ha encontrado el manga";
 
         try {
             while (true) {
@@ -141,7 +137,7 @@ public class ModeloFicheroBinario implements IModelo {
                 }
             }
         } catch (EOFException eo) {
-            //El mensaje se envía abajo
+            mensaje = "No se ha encontrado el manga";
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero");
         } catch (ClassNotFoundException ex) {
@@ -335,7 +331,7 @@ public class ModeloFicheroBinario implements IModelo {
         return manga;
     }
     
-    public short contarFicheros(){
+    public short contarRegistros(){
         short count = 0;
         
         File fichero2 = new File(NOMBREFICHERO);

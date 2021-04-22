@@ -82,32 +82,44 @@ public class VentanaConsola implements IVentana{
             case 4: //Consulta por clave
                 busqueda.buscarCodigo();
                 controlador.notifiacion();
-                if(this.manga != null){
-                    mostrarManga();
-                }
+                mostrarManga();
                 break;
             case 5: //Consulta por nombre
                 busqueda.buscarNombre();
                 controlador.notifiacion();
-                if(this.manga != null){
-                    mostrarManga();
-                }
+                mostrarManga();
                 break;
             case 6:
                 controlador.notifiacion();
                 mostrarManga();
+                if(manga == null){
+                    mensaje.setMensaje("No hay mangas");
+                    mensaje.mostrar();
+                }
                 break;
             case 7:
                 controlador.notifiacion();
                 mostrarManga();
+                if(manga == null){
+                    mensaje.setMensaje("No hay mangas");
+                    mensaje.mostrar();
+                }
                 break;
             case 8:
                 controlador.notifiacion();
                 mostrarManga();
+                if(manga == null){
+                    mensaje.setMensaje("No hay mangas");
+                    mensaje.mostrar();
+                }
                 break;
             case 9:
                 controlador.notifiacion();
                 mostrarManga();
+                if(manga == null){
+                    mensaje.setMensaje("No hay mangas");
+                    mensaje.mostrar();
+                }
                 break;
             }
             if(operacion == 10){
@@ -187,21 +199,23 @@ public class VentanaConsola implements IVentana{
     
     @Override
     public void mostrarManga(){
-        System.out.println("Codigo: " + manga.getCodigo());
-        System.out.println("Titulo: " + manga.getTitulo());
-        System.out.println("Autor: " + manga.getAutor());
-        System.out.println("Ilustrador: " + manga.getDibujo());
-        System.out.println("Editorial: " + manga.getEditorial());
-        System.out.println("Demografía: " + manga.getDemografia());
-        System.out.println("Tipo de tomo: " + manga.getTipoDeTomo());
-        System.out.println("Numeros de tomos: " + manga.getNumeroTomos());
-        if(manga.isEdicionEspecial()){
-            System.out.println("El manga tiene una edicion especial");
-        }
-        if(manga.isTerminado()){
-            System.out.println("El manga está terminado");
-        }else{
-            System.out.println("El manga no está terminado");
+        if(manga != null){
+            System.out.println("Codigo: " + manga.getCodigo());
+            System.out.println("Titulo: " + manga.getTitulo());
+            System.out.println("Autor: " + manga.getAutor());
+            System.out.println("Ilustrador: " + manga.getDibujo());
+            System.out.println("Editorial: " + manga.getEditorial());
+            System.out.println("Demografía: " + manga.getDemografia());
+            System.out.println("Tipo de tomo: " + manga.getTipoDeTomo());
+            System.out.println("Numeros de tomos: " + manga.getNumeroTomos());
+            if(manga.isEdicionEspecial()){
+                System.out.println("El manga tiene una edicion especial");
+            }
+            if(manga.isTerminado()){
+                System.out.println("El manga está terminado");
+            }else{
+                System.out.println("El manga no está terminado");
+            }
         }
     } 
 }
