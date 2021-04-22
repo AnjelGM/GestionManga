@@ -113,37 +113,82 @@ public class ModeloFicheroTexto implements IModelo{
 
     @Override
     public void modificar(ColeccionManga cm) throws IOException {
+        ColeccionManga manga;
+        String mangaString;
+        File fichero1 = new File("auxiliar.txt");;
+        FileWriter escribir;
+        BufferedWriter temporal = null;
+        File fichero2 = new File(NOMBREFICHERO);;
+        FileReader leer;
+        BufferedReader original = null;
         
+        try {
+            escribir = new FileWriter(fichero1);
+            temporal = new BufferedWriter(escribir);
+             
+            leer = new FileReader(fichero1);
+            original = new BufferedReader(leer);
+            
+            mensaje = "No se ha encontrado el manga";
+            
+            while(true){
+                mangaString = original.readLine();
+                if(!StringAManga(mangaString).equals(cm)){
+                    temporal.write(mangaString);
+                    temporal.newLine();
+                }else{
+                    manga = StringAManga(mangaString);
+                    manga.setDemografia(cm.getDemografia());
+                    manga.setTipoDeTomo(cm.getTipoDeTomo());
+                    manga.setNumeroTomos(cm.getNumeroTomos());
+                    manga.setTerminado(cm.isTerminado());
+                    temporal.write(mensaje);
+                    temporal.newLine();
+                    mensaje = "Se ha modificado el manga";
+                } 
+                
+                if(StringAManga(mangaString) == null){
+                    temporal.close();
+                    original.close();
+                    fichero2.delete();
+                    fichero1.renameTo(fichero2);
+                    numeroRegistros++;
+                    break;
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("No se encuentra el fichero");
+        }
     }
 
     @Override
     public ColeccionManga consultaClave(String clave) throws IOException {
-        
+        return null;
     }
 
     @Override
     public ColeccionManga consultaNombre(String nombre) throws IOException {
-        
+        return null;
     }
 
     @Override
     public ColeccionManga siguiente() throws IOException {
-        
+        return null;
     }
 
     @Override
     public ColeccionManga anterior() throws IOException {
-        
+        return null;
     }
 
     @Override
     public ColeccionManga primero() throws IOException {
-        
+        return null;
     }
 
     @Override
     public ColeccionManga ultimo() throws IOException {
-        
+        return null;
     }
 
     @Override
@@ -152,7 +197,7 @@ public class ModeloFicheroTexto implements IModelo{
     }
     
     private short contarRegistros() {
-        
+        return 0;
     }
     
     private ColeccionManga StringAManga(String mangaString){
