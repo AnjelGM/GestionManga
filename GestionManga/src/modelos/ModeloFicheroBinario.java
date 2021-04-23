@@ -347,7 +347,6 @@ public class ModeloFicheroBinario implements IModelo {
             
             while (true) {
                 original.readObject();
-                registroActual = count;
                 count++;
             }
         } catch (EOFException eo) {

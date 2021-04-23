@@ -7,8 +7,6 @@
 package run;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelos.*;
 import vistas.*;
 
@@ -20,7 +18,7 @@ public class Run {
     public static void main(String[] args) {
         VentanaConsola vista = new VentanaConsola();
         
-        ModeloColeccion modelo = new ModeloColeccion();
+        ModeloFicheroTexto modelo = new ModeloFicheroTexto();
         ControladorColeccion controlador = new ControladorColeccion(modelo, vista);
         
         vista.setControlador(controlador);
