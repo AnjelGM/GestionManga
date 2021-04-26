@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class ColeccionManga implements Serializable, Comparable{
     boolean terminado; //radioButton, Si está terminado o en curso
     boolean edicionEspecial; //checkBox
-    short numeroTomos; //jspinner
+    int numeroTomos; //jspinner
     String demografia; //comboBox
     String tipoDeTomo; //listBox
     String editorial; //comboBox
@@ -31,11 +31,11 @@ public class ColeccionManga implements Serializable, Comparable{
         this.edicionEspecial = edicionEspecial;
     }
 
-    public short getNumeroTomos() {
+    public int getNumeroTomos() {
         return numeroTomos;
     }
 
-    public void setNumeroTomos(short numeroTomos) {
+    public void setNumeroTomos(int numeroTomos) {
         this.numeroTomos = numeroTomos;
     }
 

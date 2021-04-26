@@ -17,7 +17,7 @@ public interface IVentana {
     public abstract byte getOperacion();
     
     public abstract void setColeccionManga(ColeccionManga Manga);
-    public abstract void mostrarManga() throws IOException; //que tenga codigo vacio en el de swing
+    public abstract void mostrarManga() throws IOException;
     
     public abstract void setControlador(ControladorColeccion cc);
     public abstract void mostrar() throws IOException; //Visualice la IGU

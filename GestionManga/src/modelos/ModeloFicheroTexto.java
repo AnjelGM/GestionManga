@@ -4,8 +4,6 @@ import clases.ColeccionManga;
 import interfaces.IModelo;
 import java.io.*;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ModeloFicheroTexto implements IModelo{
     
@@ -22,10 +20,10 @@ public class ModeloFicheroTexto implements IModelo{
     @Override
     public void alta(ColeccionManga cm) throws IOException{
         String mangaString;
-        File fichero1 = new File("auxiliar.txt");;
+        File fichero1 = new File("auxiliar.txt");
         FileWriter escribir;
         BufferedWriter temporal = null;
-        File fichero2 = new File(NOMBREFICHERO);;
+        File fichero2 = new File(NOMBREFICHERO);
         FileReader leer;
         BufferedReader original = null;
         
@@ -72,10 +70,10 @@ public class ModeloFicheroTexto implements IModelo{
     @Override
     public void baja(ColeccionManga cm) throws IOException {
         String mangaString;
-        File fichero1 = new File("auxiliar.txt");;
+        File fichero1 = new File("auxiliar.txt");
         FileWriter escribir;
         BufferedWriter temporal = null;
-        File fichero2 = new File(NOMBREFICHERO);;
+        File fichero2 = new File(NOMBREFICHERO);
         FileReader leer;
         BufferedReader original = null;
         
@@ -142,7 +140,6 @@ public class ModeloFicheroTexto implements IModelo{
                     fichero1.renameTo(fichero2);
                     break;
                 }
-                
                 if(!StringAManga(mangaString).equals(cm)){
                     temporal.write(mangaString);
                     temporal.newLine();
@@ -182,7 +179,6 @@ public class ModeloFicheroTexto implements IModelo{
                 if (manga.getCodigo().equals(clave)) {
                     registroActual = count;
                     original.close();
-                    registroActual = count;
                     return manga;
                 }
                 count++;
@@ -213,7 +209,6 @@ public class ModeloFicheroTexto implements IModelo{
                 if (manga.getTitulo().equals(nombre)) {
                     registroActual = count;
                     original.close();
-                    registroActual = count;
                     return manga;
                 }
                 count++;
@@ -260,6 +255,8 @@ public class ModeloFicheroTexto implements IModelo{
         
         if (registroActual != 1) {
             registroActual--;
+        }else if(registroActual < 1){
+            registroActual = 1;
         }
         
         try{
@@ -364,7 +361,7 @@ public class ModeloFicheroTexto implements IModelo{
         salida.setEditorial(mangaDividido.nextToken());
         salida.setTipoDeTomo(mangaDividido.nextToken());
         salida.setDemografia(mangaDividido.nextToken());
-        salida.setNumeroTomos(Short.parseShort(mangaDividido.nextToken()));
+        salida.setNumeroTomos(Integer.parseInt(mangaDividido.nextToken()));
         if(mangaDividido.nextToken().equals("true")){
             salida.setEdicionEspecial(true);
         }else{

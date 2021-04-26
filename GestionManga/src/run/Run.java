@@ -6,6 +6,7 @@
 
 package run;
 
+import com.github.javafaker.Faker;
 import java.io.IOException;
 import modelos.*;
 import vistas.*;
@@ -16,9 +17,9 @@ import vistas.*;
  */
 public class Run {
     public static void main(String[] args) {
-        VentanaConsola vista = new VentanaConsola();
-        
-        ModeloFicheroTexto modelo = new ModeloFicheroTexto();
+        Faker a;
+        Ventana vista = new Ventana();
+        ModeloMySQL modelo = new ModeloMySQL();
         ControladorColeccion controlador = new ControladorColeccion(modelo, vista);
         
         vista.setControlador(controlador);

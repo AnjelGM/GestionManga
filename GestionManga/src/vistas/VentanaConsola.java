@@ -4,7 +4,6 @@ import clases.ColeccionManga;
 import java.util.Scanner;
 import run.ControladorColeccion;
 import interfaces.IVentana;
-import interfaces.IVentanaMensaje;
 import java.io.IOException;
 
 /**

@@ -257,6 +257,8 @@ public class ModeloFicheroBinario implements IModelo {
 
         if (registroActual != 1) {
             registroActual--;
+        }else if(registroActual < 1){
+            registroActual = 1;
         }
 
         try {
