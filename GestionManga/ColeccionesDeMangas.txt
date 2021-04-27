@@ -1,0 +1,2 @@
+Mon|Monster|asdf|asdf|Planeta|Kanzenban|Seinen|1|true|true
+asdf|qwer|asdf|asdf|Fandogamia|Shinsoban|Shonen|35|false|false

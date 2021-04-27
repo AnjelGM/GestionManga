@@ -45,6 +45,7 @@ public class ModeloFicheroBinario implements IModelo {
             filein = new FileInputStream(fichero2);
             original = new ObjectInputStream(filein);
             
+            mensaje = "Manga creado";
             while (true) {
                 manga = (ColeccionManga) original.readObject();
                 if(manga.equals(cm)){
@@ -52,6 +53,7 @@ public class ModeloFicheroBinario implements IModelo {
                     temporal.close();
                     original.close();
                     fichero1.delete();
+                    break;
                 }
                 temporal.writeObject(manga);
             }
@@ -70,7 +72,6 @@ public class ModeloFicheroBinario implements IModelo {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ModeloFicheroBinario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        mensaje = "Manga creado";
     }
 
     @Override

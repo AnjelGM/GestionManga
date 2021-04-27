@@ -7,8 +7,6 @@
 package vistas;
 
 import interfaces.IVentanaMensaje;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * 

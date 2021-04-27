@@ -15,10 +15,10 @@ import run.ControladorColeccion;
  * 
  * @author Angel
  */
-public class Ventana extends JFrame implements IVentana{
+public class VentanaSwing extends JFrame implements IVentana{
     private ColeccionManga manga;
-    private VentanaBusqueda busqueda;
-    private VentanaMensaje mensaje;
+    private VentanaBusquedaSwing busqueda;
+    private VentanaMensajeSwing mensaje;
     private ControladorColeccion controlador;
     private byte operacion;
     
@@ -32,18 +32,17 @@ public class Ventana extends JFrame implements IVentana{
     private JList<String> jliTipoDeTomo;
     private JTextField jtfCodigo, jtfTitulo, jtfAutor, jtfDibujo;
     
-    private JButton jbNuevo, jbBorrar, jbModificar, jbConsulta; //Las acciones
+    private JButton jbNuevo, jbBorrar, jbModificar, jbConsulta, jbLimpiar; //Las acciones
     private JButton jbPrimero, jbAnterior, jbSiguiente, jbUltimo; //La navegacion
     
     private JPanel jpBotonesAccion, jpNavegacion, jpInformacion, jpRadioButtons;
     
-    public Ventana(){
+    public VentanaSwing(){
         manga = new ColeccionManga();
-        busqueda = new VentanaBusqueda();
-        mensaje = new VentanaMensaje();
+        busqueda = new VentanaBusquedaSwing();
+        mensaje = new VentanaMensajeSwing();
+        busqueda.setVistaPrincipal(this);
         
-        Image ventana = new ImageIcon("src/gfx/ImagenVentana.png").getImage();
-                
         iniciarLabels();
         iniciarRadioButtons();
         iniciarCheckBox();
@@ -57,7 +56,6 @@ public class Ventana extends JFrame implements IVentana{
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("GestionManga");
-        setIconImage(ventana);
         setLocationRelativeTo(null);
         pack();
     }
@@ -136,22 +134,24 @@ public class Ventana extends JFrame implements IVentana{
     }
     
     private void iniciarButtonsAccion(){
-        ImageIcon nuevo = new ImageIcon("src/gfx/nuevo.png");
-        ImageIcon editar = new ImageIcon("src/gfx/editar.png");
-        ImageIcon borrar = new ImageIcon("src/gfx/borrar.png");
-        ImageIcon consultar = new ImageIcon("src/gfx/consulta.png");
+        ImageIcon nuevo = new ImageIcon(getClass().getResource("/gfx/nuevo.png"));
+        ImageIcon editar = new ImageIcon(getClass().getResource("/gfx/editar.png"));
+        ImageIcon borrar = new ImageIcon(getClass().getResource("/gfx/borrar.png"));
+        ImageIcon consultar = new ImageIcon(getClass().getResource("/gfx/consulta.png"));
+        ImageIcon limpiar = new ImageIcon(getClass().getResource("/gfx/limpiar.png"));
         
         jbNuevo = new JButton(nuevo);
         jbModificar = new JButton(editar);
         jbBorrar = new JButton(borrar);
         jbConsulta = new JButton(consultar);
+        jbLimpiar = new JButton(limpiar);
     }
     
     private void iniciarButtonsNavegacion(){
-        ImageIcon primero = new ImageIcon("src/gfx/primero.png");
-        ImageIcon anterior = new ImageIcon("src/gfx/anterior.png");
-        ImageIcon siguiente = new ImageIcon("src/gfx/siguiente.png");
-        ImageIcon ultimo = new ImageIcon("src/gfx/ultimo.png");
+        ImageIcon primero = new ImageIcon(getClass().getResource("/gfx/primero.png"));
+        ImageIcon anterior = new ImageIcon(getClass().getResource("/gfx/anterior.png"));
+        ImageIcon siguiente = new ImageIcon(getClass().getResource("/gfx/siguiente.png"));
+        ImageIcon ultimo = new ImageIcon(getClass().getResource("/gfx/ultimo.png"));
         
         jbPrimero = new JButton(primero);
         jbAnterior = new JButton(anterior);
@@ -180,6 +180,7 @@ public class Ventana extends JFrame implements IVentana{
         jpBotonesAccion.add(jbModificar);
         jpBotonesAccion.add(jbBorrar);
         jpBotonesAccion.add(jbConsulta);
+        jpBotonesAccion.add(jbLimpiar);
     }
     
     private void iniciarPanelInformacion(){
@@ -251,13 +252,13 @@ public class Ventana extends JFrame implements IVentana{
                 manga.setEditorial((String) jcobEditorial.getSelectedItem());
                 manga.setDemografia((String) jcobDemografia.getSelectedItem());
                 manga.setTipoDeTomo(jliTipoDeTomo.getSelectedValue());
-                manga.setNumeroTomos((Integer) jsNumeroTomos.getValue());
+                manga.setNumeroTomos((int) jsNumeroTomos.getValue());
                 manga.setEdicionEspecial(jcbEdicionEspecial.isSelected());
                 manga.setTerminado(jrbTerminado.isSelected());
                 try {
                     controlador.notifiacion();
                 } catch (IOException ex) {
-                    Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VentanaSwing.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -270,7 +271,7 @@ public class Ventana extends JFrame implements IVentana{
                 try {
                     controlador.notifiacion();
                 } catch (IOException ex) {
-                    Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VentanaSwing.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -286,7 +287,40 @@ public class Ventana extends JFrame implements IVentana{
                 try {
                     controlador.notifiacion();
                 } catch (IOException ex) {
-                    Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VentanaSwing.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        jbConsulta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                busqueda.mostrar();
+            }
+        });
+        
+        jbSiguiente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                operacion = 6;
+                try {
+                    controlador.notifiacion();
+                    mostrarManga();
+                } catch (IOException ex) {
+                    Logger.getLogger(VentanaSwing.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        jbAnterior.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                operacion = 7;
+                try {
+                    controlador.notifiacion();
+                    mostrarManga();
+                } catch (IOException ex) {
+                    Logger.getLogger(VentanaSwing.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -299,15 +333,49 @@ public class Ventana extends JFrame implements IVentana{
                     controlador.notifiacion();
                     mostrarManga();
                 } catch (IOException ex) {
-                    Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VentanaSwing.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-    }
+        
+        jbUltimo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                operacion = 9;
+                try {
+                    controlador.notifiacion();
+                    mostrarManga();
+                } catch (IOException ex) {
+                    Logger.getLogger(VentanaSwing.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        jbLimpiar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                jtfCodigo.setText("");
+                jtfTitulo.setText("");
+                jtfAutor.setText("");
+                jtfDibujo.setText("");
+                jcobDemografia.setSelectedItem("Shonen");
+                jcobEditorial.setSelectedItem("Planeta");
+                jliTipoDeTomo.setSelectedIndex(0);
+                jsNumeroTomos.setValue(1);
+                jcbEdicionEspecial.setSelected(false);
+                jrbTerminado.setSelected(false);
+                jrbEnCurso.setSelected(true);
+            }
+        });
+    } 
 
     @Override
     public ColeccionManga getColeccionManga() {
         return manga;
+    }
+    
+    public byte getOperacion(){
+        return operacion;
     }
 
     @Override
@@ -320,9 +388,8 @@ public class Ventana extends JFrame implements IVentana{
         return mensaje;
     }
 
-    @Override
-    public byte getOperacion() {
-        return operacion;
+    public void setOperacion(byte operacion) {
+        this.operacion = operacion;
     }
 
     @Override
@@ -332,41 +399,44 @@ public class Ventana extends JFrame implements IVentana{
 
     @Override
     public void mostrarManga() throws IOException {
-        jtfCodigo.setText(manga.getCodigo());
-        jtfTitulo.setText(manga.getTitulo());
-        jtfAutor.setText(manga.getAutor());
-        jtfDibujo.setText(manga.getDibujo());
-        jcobDemografia.setSelectedItem(manga.getDemografia());
-        jcobEditorial.setSelectedItem(manga.getEditorial());
-        switch (manga.getTipoDeTomo()){
-            case "Tankobon":
-                jliTipoDeTomo.setSelectedIndex(0);
-                break;
-            case "Kanzenban":
-                jliTipoDeTomo.setSelectedIndex(1);
-                break;
-            case "Shinsoban":
-                jliTipoDeTomo.setSelectedIndex(2);
-                break;
-        }
-        jsNumeroTomos.setValue(manga.getNumeroTomos());
-        if(manga.isEdicionEspecial()){
-            jcbEdicionEspecial.setSelected(true);
-        }else{
-            jcbEdicionEspecial.setSelected(false);
-        }
-        if(manga.isTerminado()){
-            jrbTerminado.setSelected(true);
-            jrbEnCurso.setSelected(false);
-        }else{
-            jrbTerminado.setSelected(false);
-            jrbEnCurso.setSelected(true);
+        if(manga != null){
+            jtfCodigo.setText(manga.getCodigo());
+            jtfTitulo.setText(manga.getTitulo());
+            jtfAutor.setText(manga.getAutor());
+            jtfDibujo.setText(manga.getDibujo());
+            jcobDemografia.setSelectedItem(manga.getDemografia());
+            jcobEditorial.setSelectedItem(manga.getEditorial());
+            switch (manga.getTipoDeTomo()){
+                case "Tankobon":
+                    jliTipoDeTomo.setSelectedIndex(0);
+                    break;
+                case "Kanzenban":
+                    jliTipoDeTomo.setSelectedIndex(1);
+                    break;
+                case "Shinsoban":
+                    jliTipoDeTomo.setSelectedIndex(2);
+                    break;
+            }
+            jsNumeroTomos.setValue(manga.getNumeroTomos());
+            if(manga.isEdicionEspecial()){
+                jcbEdicionEspecial.setSelected(true);
+            }else{
+                jcbEdicionEspecial.setSelected(false);
+            }
+            if(manga.isTerminado()){
+                jrbTerminado.setSelected(true);
+                jrbEnCurso.setSelected(false);
+            }else{
+                jrbTerminado.setSelected(false);
+                jrbEnCurso.setSelected(true);
+            }
         }
     }
 
     @Override
     public void setControlador(ControladorColeccion cc) {
         controlador = cc;
+        busqueda.setControlador(controlador);
     }
 
     @Override

@@ -127,7 +127,7 @@ public class VentanaConsola implements IVentana{
         }
     }
     
-    public void crear() {
+    private void crear() {
         char aux;
         
         System.out.println("Introduce el codigo del manga:");
@@ -139,13 +139,19 @@ public class VentanaConsola implements IVentana{
         System.out.println("Introduce el artista(ilustrador) del manga:");
         manga.setDibujo(sc.nextLine());
         System.out.println("Introduce la editorial del manga:");
-        manga.setEditorial(sc.nextLine());
+        pedirEditorial();
         System.out.println("Introduce la demografía del manga:");
-        manga.setDemografia(sc.nextLine());
+        pedirDemografia();
         System.out.println("Introduce el tipo de tomo que tiene el manga:");
-        manga.setTipoDeTomo(sc.nextLine());
+        pedirTipoDeTomo();
         System.out.println("Introduce el numero de tomos que tiene el manga");
+        try{
         manga.setNumeroTomos(sc.nextShort());
+        }catch(java.lang.NumberFormatException ex){
+            System.out.println("Has introducido un dato que no es un numero\n"
+                    + "El manga se va a crear con un unico tomo");
+            manga.setNumeroTomos(1);
+        }
         sc.nextLine();
         System.out.println("¿EL manga tiene edición especial? (S/N)");
         aux = sc.next().charAt(0);
@@ -157,42 +163,136 @@ public class VentanaConsola implements IVentana{
         System.out.println("¿El manga está terminado? (S/N)");
         aux = sc.next().charAt(0);
         if(aux == 'S'){
-            if(aux == 'S'){
             manga.setTerminado(true);
         }else{
             manga.setTerminado(false);
         }
-        }
     }
     
-    public void borrar() {
-        char aux;
-        
+    private void borrar() {        
         System.out.println("Introduce el codigo que deseas eliminar:");
         manga.setCodigo(sc.nextLine());
     }
     
-    public void modificar() {
+    private void modificar() {
         char aux;
         
-        System.out.println("Introduce el codigo del manga que desea modificar:");
-        manga.setCodigo(sc.nextLine());
         
-        System.out.println("Introduce la demografía del manga:");
-        manga.setDemografia(sc.nextLine());
-        System.out.println("Introduce el tipo de tomo que tiene el manga:");
-        manga.setTipoDeTomo(sc.nextLine());
-        System.out.println("Introduce el numero de tomos que tiene el manga");
-        manga.setNumeroTomos(sc.nextShort());
-        sc.nextLine();
-        System.out.println("¿El manga está terminado? (S/N)");
-        aux = sc.next().charAt(0);
-        if(aux == 'S'){
+        try{
+            System.out.println("Introduce el codigo del manga que desea modificar:");
+            manga.setCodigo(sc.nextLine());
+
+            System.out.println("Introduce la demografía del manga:");
+            manga.setDemografia(sc.nextLine());
+            System.out.println("Introduce el tipo de tomo que tiene el manga:");
+            pedirTipoDeTomo();
+            System.out.println("Introduce el numero de tomos que tiene el manga");
+            manga.setNumeroTomos(sc.nextShort());
+            sc.nextLine();
+            System.out.println("¿El manga está terminado? (S/N)");
+            aux = sc.next().charAt(0);
             if(aux == 'S'){
                 manga.setTerminado(true);
             }else{
                 manga.setTerminado(false);
             }
+        }catch(java.lang.NumberFormatException ex){
+            sc.nextLine();
+            System.out.println("Has introducido un dato que no es un numero\n"
+                    + "La operacion se va a cancelar");
+        }
+        
+    }
+    
+    private void pedirEditorial(){
+        byte editorial;
+        System.out.println("(1)Planeta\t(2)Norma\t(3)ECC\n"
+                + "(4)Panini\t(5)Ivrea\t(6)Milky Way\n"
+                + "(7)Fandogamia\t(8)Kodai\t(9)Satori\n"
+                + "(10)Babylon\t(11)Arechi\t(12)Kitsune\n"
+                + "(13)Ooso");
+        editorial = sc.nextByte();
+        sc.nextLine();
+        switch(editorial){
+            case 1:
+                manga.setEditorial("Planeta");
+                break;
+            case 2:
+                manga.setEditorial("Norma");
+                break;
+            case 3:
+                manga.setEditorial("ECC");
+                break;
+            case 4:
+                manga.setEditorial("Panini");
+                break;
+            case 5:
+                manga.setEditorial("Ivrea");
+                break;
+            case 6:
+                manga.setEditorial("Milky Way");
+                break;
+            case 7:
+                manga.setEditorial("Fandogamia");
+                break;
+            case 8:
+                manga.setEditorial("Kodai");
+                break;
+            case 9:
+                manga.setEditorial("Satori Ediciones");
+                break;
+            case 10:
+                manga.setEditorial("Ediciones Babylon");
+                break;
+            case 11:
+                manga.setEditorial("Arechi");
+                break;
+            case 12:
+                manga.setEditorial("Kitsune Manga");
+                break;
+            case 13:
+                manga.setEditorial("Ooso");
+                break;
+        }
+    }
+    
+    private void pedirDemografia(){
+        byte demografia;
+        System.out.println("(1)Shonen\t(2)Shoujo\t(3)Seinen\n"
+                + "(4)Josei");
+        demografia = sc.nextByte();
+        sc.nextLine();
+        switch(demografia){
+            case 1:
+                manga.setDemografia("Shonen");
+                break;
+            case 2:
+                manga.setDemografia("Shoujo");
+                break;
+            case 3:
+                manga.setDemografia("Seinen");
+                break;
+            case 4:
+                manga.setDemografia("Josei");
+                break;
+        }
+    }
+    
+    private void pedirTipoDeTomo(){
+        byte tipoDeTomo;
+        System.out.println("(1)Tankobon\t(2)Kanzenban\t(3)Shinsoban\n");
+        tipoDeTomo = sc.nextByte();
+        sc.nextLine();
+        switch(tipoDeTomo){
+            case 1:
+                manga.setTipoDeTomo("Tankobon");
+                break;
+            case 2:
+                manga.setTipoDeTomo("Kanzenban");
+                break;
+            case 3:
+                manga.setTipoDeTomo("Shinsoban");
+                break;
         }
     }
     
