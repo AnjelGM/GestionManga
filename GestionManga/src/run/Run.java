@@ -17,7 +17,7 @@ import vistas.*;
  */
 public class Run {
     public static void main(String[] args) {
-        IVentana vista = new VentanaSwing();
+        IVentana vista = new VentanaConsola();
         IModelo modelo = new ModeloColeccion();
         ControladorColeccion controlador = new ControladorColeccion(modelo, vista);
         

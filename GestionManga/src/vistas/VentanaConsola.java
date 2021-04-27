@@ -146,13 +146,13 @@ public class VentanaConsola implements IVentana{
         pedirTipoDeTomo();
         System.out.println("Introduce el numero de tomos que tiene el manga");
         try{
-        manga.setNumeroTomos(sc.nextShort());
+            String numero = sc.nextLine();
+            manga.setNumeroTomos(Short.parseShort(numero));
         }catch(java.lang.NumberFormatException ex){
             System.out.println("Has introducido un dato que no es un numero\n"
                     + "El manga se va a crear con un unico tomo");
             manga.setNumeroTomos(1);
         }
-        sc.nextLine();
         System.out.println("¿EL manga tiene edición especial? (S/N)");
         aux = sc.next().charAt(0);
         if(aux == 'S'){
@@ -187,8 +187,8 @@ public class VentanaConsola implements IVentana{
             System.out.println("Introduce el tipo de tomo que tiene el manga:");
             pedirTipoDeTomo();
             System.out.println("Introduce el numero de tomos que tiene el manga");
-            manga.setNumeroTomos(sc.nextShort());
-            sc.nextLine();
+            String numero = sc.nextLine();
+            manga.setNumeroTomos(Short.parseShort(numero));
             System.out.println("¿El manga está terminado? (S/N)");
             aux = sc.next().charAt(0);
             if(aux == 'S'){
@@ -211,8 +211,12 @@ public class VentanaConsola implements IVentana{
                 + "(7)Fandogamia\t(8)Kodai\t(9)Satori\n"
                 + "(10)Babylon\t(11)Arechi\t(12)Kitsune\n"
                 + "(13)Ooso");
-        editorial = sc.nextByte();
-        sc.nextLine();
+        try{
+            editorial = Byte.parseByte(sc.nextLine());
+        }catch(java.lang.NumberFormatException ex){
+            System.out.println("Se seleccionará el primer dato");
+            editorial = 1;
+        }
         switch(editorial){
             case 1:
                 manga.setEditorial("Planeta");
@@ -260,8 +264,12 @@ public class VentanaConsola implements IVentana{
         byte demografia;
         System.out.println("(1)Shonen\t(2)Shoujo\t(3)Seinen\n"
                 + "(4)Josei");
-        demografia = sc.nextByte();
-        sc.nextLine();
+        try{
+            demografia = Byte.parseByte(sc.nextLine());
+        }catch(java.lang.NumberFormatException ex){
+            System.out.println("Se seleccionará el primer dato");
+            demografia = 1;
+        }
         switch(demografia){
             case 1:
                 manga.setDemografia("Shonen");
@@ -281,8 +289,12 @@ public class VentanaConsola implements IVentana{
     private void pedirTipoDeTomo(){
         byte tipoDeTomo;
         System.out.println("(1)Tankobon\t(2)Kanzenban\t(3)Shinsoban\n");
-        tipoDeTomo = sc.nextByte();
-        sc.nextLine();
+        try{
+            tipoDeTomo = Byte.parseByte(sc.nextLine());
+        }catch(java.lang.NumberFormatException ex){
+            System.out.println("Se seleccionará el primer dato");
+            tipoDeTomo = 1;
+        }
         switch(tipoDeTomo){
             case 1:
                 manga.setTipoDeTomo("Tankobon");
